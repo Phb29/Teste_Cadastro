@@ -1,0 +1,57 @@
+<div class="container" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="20px">
+  <mat-card>
+    <mat-card-title fxLayoutAlign="center center">Criar Novo Cliente</mat-card-title>
+    <mat-card-content fxLayout="column" fxLayoutAlign="center center">
+      <div>
+         <mat-form-field>
+  <input matInput placeholder="Código" [(ngModel)]="novoCliente.codigo" required>
+  <mat-error *ngIf="formGroup?.get('codigo')">Código é obrigatório</mat-error>
+</mat-form-field>
+      </div>
+      <div>
+        <mat-form-field>
+          <input matInput placeholder="Nome" [(ngModel)]="novoCliente.nome" required>
+          <mat-error *ngIf="formGroup?.get('nome')   ">Nome é obrigatório</mat-error>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field>
+          <input matInput placeholder="CNPJ" [(ngModel)]="novoCliente.cnpj" required>
+          <mat-error *ngIf="formGroup?.get('cnpj')">CNPJ é obrigatório</mat-error>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field>
+          <input matInput placeholder="CEP" [(ngModel)]="novoCliente.endereco.localizacao" required>
+          <mat-error  *ngIf="formGroup?.get('localizacao')">CEP é obrigatório</mat-error>
+        </mat-form-field>
+      </div>
+   
+      <button mat-raised-button color="primary" style="margin-bottom: 10px; width: 212px; height: 56px;" (click)="buscarLatitudeLongitude(novoCliente.endereco.localizacao)">Buscar Latitude/Longitude</button>
+      <div>
+        <mat-form-field>
+          <input matInput placeholder="Latitude" [(ngModel)]="novoCliente.endereco.latitude" (keydown)="false" required>
+          <mat-error *ngIf="formGroup?.get('endereco.latitude')">Latitude é obrigatória</mat-error>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field>
+          <input matInput placeholder="Longitude" [(ngModel)]="novoCliente.endereco.longitude" (keydown)="false" required>
+          <mat-error *ngIf="formGroup?.get('endereco.longitude')">Longitude é obrigatória</mat-error>
+        </mat-form-field>
+      </div>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" (click)="criarNovoCliente()">Criar</button>
+  
+    </mat-card-actions>
+  </mat-card>
+
+  <app-cliente-list></app-cliente-list>
+
+  <div>
+    <button style="width: 50px;" mat-raised-button color="primary" (click)="carregarPaginaAnterior()">Anterior</button>
+    <span style="margin: 10px;">Página {{ pageAtual + 1 }} de {{ totalPages }}</span>
+    <button style="width: 50px;" mat-raised-button color="primary" (click)="carregarProximaPagina()">Próxima</button>
+  </div>
+</div>

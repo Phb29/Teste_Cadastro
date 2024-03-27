@@ -1,0 +1,49 @@
+<h2>Clientes</h2>
+<mat-form-field>
+  <input matInput placeholder="Buscar por Nome" [(ngModel)]="termoDeBusca" (input)="filtrarClientes()">
+</mat-form-field    >
+  <mat-card *ngIf="clientesFiltrados.length > 0; else noClientes"   >
+    <mat-card style="margin-bottom: 5px; padding: 20px;" *ngFor="let cliente of clientesFiltrados">
+      <mat-card-title>{{ cliente.nome }}</mat-card-title>
+      <mat-card-content>
+        <p>Código: {{ cliente.codigo }}</p>
+        <p>CNPJ: {{ cliente.cnpj }}</p>
+        <p>CEP: {{ cliente.endereco.localizacao }}</p>
+        <p>Latitude: {{ cliente.endereco.latitude }}</p>
+        <p>Longitude: {{ cliente.endereco.longitude }}</p>
+      </mat-card-content>
+      <mat-card-actions  fxLayout="row" fxLayoutGap="10px">
+        <button  mat-raised-button color="accent" (click)="openEditarModal(cliente)">Editar</button>
+        <button mat-raised-button color="warn" (click)="deletarCliente(cliente.id!)">Excluir</button>
+      </mat-card-actions >
+    </mat-card>
+  </mat-card>
+  <ng-template #noClientes>
+    <p>Nenhum cliente encontrado.</p>
+  </ng-template>
+
+<div class="modal" *ngIf="modalAberta">
+  <h2>Editar Cliente</h2>
+  <mat-form-field>
+    <input matInput placeholder="Código" [(ngModel)]="clienteParaEditar!.codigo">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Nome" [(ngModel)]="clienteParaEditar!.nome">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="CNPJ" [(ngModel)]="clienteParaEditar!.cnpj">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="CEP" [(ngModel)]="clienteParaEditar!.endereco.localizacao">
+  </mat-form-field>
+  <!-- Adicione um botão para buscar latitude e longitude -->
+  <button mat-raised-button  color="primary"  fxLayoutGap="20px" (click)="buscarLatitudeLongitude(clienteParaEditar!.endereco.localizacao)">Buscar Latitude/Longitude</button>
+  <mat-form-field>
+    <input matInput placeholder="Latitude" [(ngModel)]="clienteParaEditar!.endereco.latitude" (keydown)="false">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Longitude" [(ngModel)]="clienteParaEditar!.endereco.longitude" (keydown)="false">
+  </mat-form-field>
+  <button mat-raised-button color="accent" (click)="salvarEdicao()">Salvar</button>
+  <button mat-raised-button (click)="fecharModal()">Cancelar</button>
+</div>
